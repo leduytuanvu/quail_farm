@@ -1,20 +1,18 @@
 const express = require('express');
-const { getUsers, createUser } = require('../controllers/userController');
-
 const router = express.Router();
 
 /**
  * @swagger
  * tags:
  *   name: Users
- *   description: API for managing users
+ *   description: User management and authentication
  */
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   get:
- *     summary: Retrieve a list of users
+ *     summary: Get all users
  *     tags: [Users]
  *     responses:
  *       200:
@@ -26,11 +24,13 @@ const router = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/User'
  */
-router.get('/', getUsers);
+router.get('/users', (req, res) => {
+    res.status(200).json([{ id: 1, name: 'John Doe', email: 'john@example.com' }]);
+});
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   post:
  *     summary: Create a new user
  *     tags: [Users]
@@ -43,9 +43,13 @@ router.get('/', getUsers);
  *     responses:
  *       201:
  *         description: User created successfully
- *       400:
- *         description: Invalid input
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
  */
-router.post('/', createUser);
+router.post('/users', (req, res) => {
+    res.status(201).json(req.body);
+});
 
 module.exports = router;
