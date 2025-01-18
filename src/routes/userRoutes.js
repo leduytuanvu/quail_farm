@@ -1,55 +1,67 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
+const User = require('../models/User');
 const router = express.Router();
 
 /**
  * @swagger
- * tags:
- *   name: Users
- *   description: User management and authentication
- */
-
-/**
- * @swagger
- * /api/users:
- *   get:
- *     summary: Get all users
- *     tags: [Users]
- *     responses:
- *       200:
- *         description: A list of users
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
- */
-router.get('/users', (req, res) => {
-    res.status(200).json([{ id: 1, name: 'John Doe', email: 'john@example.com' }]);
-});
-
-/**
- * @swagger
- * /api/users:
+ * /api/users/login:
  *   post:
- *     summary: Create a new user
+ *     summary: Login a user
  *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/UserInput'
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: User's email
+ *               password:
+ *                 type: string
+ *                 description: User's password
+ *             required:
+ *               - email
+ *               - password
+ *             example:
+ *               email: john@example.com
+ *               password: password123
  *     responses:
- *       201:
- *         description: User created successfully
+ *       200:
+ *         description: Successful login
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   description: JWT token for authentication
+ *       401:
+ *         description: Invalid credentials
  */
-router.post('/users', (req, res) => {
-    res.status(201).json(req.body);
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+
+        const isMatch = await user.matchPassword(password);
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+
+        res.status(200).json({
+            message: 'Login successful',
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
 module.exports = router;
