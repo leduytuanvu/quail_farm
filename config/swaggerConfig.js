@@ -6,16 +6,20 @@ const options = {
         info: {
             title: 'Quail Farm API',
             version: '1.0.0',
-            description: 'API documentation for the Quail Farm project',
+            description: 'Api documentation for the Quail Farm project',
         },
         servers: [
+            {
+                url: 'http://localhost:5000',
+                description: 'Development server',
+            },
             {
                 url: 'https://quail-farm-sigma.vercel.app',
                 description: 'Production server',
             },
             {
-                url: 'http://localhost:5000',
-                description: 'Development server',
+                url: 'https://quail-farm-8tkhhvjk9-leduytuanvus-projects.vercel.app',
+                description: 'Production server',
             },
         ],
     },

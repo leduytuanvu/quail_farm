@@ -12,7 +12,11 @@ const app = express();
 // app.use(cors());
 app.use(
   cors({
-    origin: ['http://localhost:5000', 'http://localhost:3000', 'https://quail-farm-sigma.vercel.app', 'https://quail-farm-gsmpocsys-leduytuanvus-projects.vercel.app'],
+    origin: [
+      'http://localhost:5000', 
+      'https://quail-farm-sigma.vercel.app', 
+      'https://quail-farm-gstz20q6w-leduytuanvus-projects.vercel.app',
+    ],
   })
 );
 app.use(express.json());
