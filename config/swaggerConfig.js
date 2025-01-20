@@ -10,7 +10,11 @@ const options = {
         },
         servers: [
             {
-                url: process.env.SWAGGER_BASE_URL || 'http://localhost:5000',
+                url: 'https://quail-farm-sigma.vercel.app',
+                description: 'Production server',
+            },
+            {
+                url: 'http://localhost:5000',
                 description: 'Development server',
             },
         ],
