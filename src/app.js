@@ -9,12 +9,23 @@ const errorMiddleware = require('./middlewares/errorMiddleware');
 const app = express();
 
 // Middleware
-app.use(cors());
+// app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use(morgan('dev'));
 
 // Explicitly handle `/api-docs`
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }));
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+      explorer: true,
+      customCssUrl: '/api-docs/swagger-ui.css',
+      customJsUrl: '/api-docs/swagger-ui-bundle.js',
+  })
+);
+
 
 // Define other routes
 app.use('/api', routes);
