@@ -7,6 +7,8 @@ connectDB();
 
 // Khởi chạy server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}/api-docs and on https://quail-farm-sigma.vercel.app/api-docs`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Server is running on http://localhost:${PORT}/api-docs and on https://quail-farm-sigma.vercel.app/api-docs`);
+// });
+
+module.exports = app;

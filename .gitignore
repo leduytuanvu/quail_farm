@@ -52,3 +52,4 @@ Thumbs.db
 
 # Debugging-related files
 debug.log
+.vercel
