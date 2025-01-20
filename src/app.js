@@ -10,22 +10,16 @@ const app = express();
 
 // Middleware
 // app.use(cors());
-app.use(cors({ origin: '*' }));
+app.use(
+  cors({
+    origin: ['http://localhost:5000', 'http://localhost:3000', 'https://quail-farm-sigma.vercel.app', 'https://quail-farm-gsmpocsys-leduytuanvus-projects.vercel.app'],
+  })
+);
 app.use(express.json());
 app.use(morgan('dev'));
 
 // Explicitly handle `/api-docs`
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }));
-app.use(
-  '/api-docs',
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerSpec, {
-      explorer: true,
-      customCssUrl: '/api-docs/swagger-ui.css',
-      customJsUrl: '/api-docs/swagger-ui-bundle.js',
-  })
-);
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }));
 
 // Define other routes
 app.use('/api', routes);
